@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- base-package 의 의미 : kr.or.ddit 패키지 하위의 모든 클래스를 대상으로 스캔
+								여러개의 베이스 패키지 설정가능
+								base-package="kr.or.ddit.user, kr.or.ddit.login"
+								이런식으로
+								
+		기본적으로 스캔 대상이 되는 annotation : @Controller, @Service, @Repository, @Component
+		@Component 얘는 기타 등등에 해당
+		
+		@Resource, @Autowired, @Injection등 주입과 관련된 어노테이션에 대해서도 처리
+		
+		annotation ==> 주석
+		
+	-->
+	
+	<context:component-scan base-package="kr.or.ddit"></context:component-scan>
+	<!--  레포지토리건 서비스건 코드가 천줄이 되더라도 위에 한줄만 가져오면 다 돼. -->
+	
+	
+</beans>
