@@ -14,33 +14,33 @@ public class IocMain {
 	private static final Logger logger = LoggerFactory.getLogger(IocMain.class);
 	
 	public static void main(String[] args) {
-		//1. ½ºÇÁ¸µ ¼³Á¤ ÆÄÀÏÀ» ÀÌ¿ëÇÏ¿© ½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê¸¦ »ı¼º(kr/or/ddit/ioc/ioc.xml)
-		//		½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê Å¸ÀÔ : ApplicationContext
-		//2. ½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê¿¡°Ô ¸¸µé¾îÁø ½ºÇÁ¸µ ºó(°´Ã¼)À» ¿äÃ»
-		//		DL(Dependency Lookup) : ½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê¿¡°Ô ½ºÇÁ¸µ ºóÀ» ¿äÃ»ÇÏ´Â °úÁ¤
-		//3. ½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê¿¡¼­ °ü¸®µÇ°í ÀÖ´Â ºóÀÌ Àß ¸¸µé¾î Á³´ÂÁö È®ÀÎ
+		//1. ìŠ¤í”„ë§ ì„¤ì • íŒŒì¼ì„ ì´ìš©í•˜ì—¬ ìŠ¤í”„ë§ ì»¨í…Œì´ë„ˆë¥¼ ìƒì„±(kr/or/ddit/ioc/ioc.xml)
+		//		ìŠ¤í”„ë§ ì»¨í…Œì´ë„ˆ íƒ€ì… : ApplicationContext
+		//2. ìŠ¤í”„ë§ ì»¨í…Œì´ë„ˆì—ê²Œ ë§Œë“¤ì–´ì§„ ìŠ¤í”„ë§ ë¹ˆ(ê°ì²´)ì„ ìš”ì²­
+		//		DL(Dependency Lookup) : ìŠ¤í”„ë§ ì»¨í…Œì´ë„ˆì—ê²Œ ìŠ¤í”„ë§ ë¹ˆì„ ìš”ì²­í•˜ëŠ” ê³¼ì •
+		//3. ìŠ¤í”„ë§ ì»¨í…Œì´ë„ˆì—ì„œ ê´€ë¦¬ë˜ê³  ìˆëŠ” ë¹ˆì´ ì˜ ë§Œë“¤ì–´ ì¡ŒëŠ”ì§€ í™•ì¸
 		
 		
 		
 		
-		//µÎ°¡Áö Å¸ÀÔÀÇ °æ·Î - ¹°¸®Àû°æ·Î, Å¬·¡½ºÅ¸ÀÔÀÇ °æ·Î
+		//ë‘ê°€ì§€ íƒ€ì…ì˜ ê²½ë¡œ - ë¬¼ë¦¬ì ê²½ë¡œ, í´ë˜ìŠ¤íƒ€ì…ì˜ ê²½ë¡œ
 		// 1. d:\\upload file:
 		// 2. class classpath:
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:kr/or/ddit/ioc/ioc.xml");
 		
-		// ¿©±â±îÁö 1¹ø³¡
+		// ì—¬ê¸°ê¹Œì§€ 1ë²ˆë
 		
-		// ÀÌÁ¦ 2¹ø - context´Â ÄÁÅ×ÀÌ³Ê¾ß
+		// ì´ì œ 2ë²ˆ - contextëŠ” ì»¨í…Œì´ë„ˆì•¼
 		UserDao userDao = (UserDao)context.getBean("userDao");
 		
-		UserVo userVo = userDao.getUser("brown");
+		UserVo userVo = userDao.selectUser("brown");
 		logger.debug("userVo :{}", userVo);
 		
 	
-		//½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê·ÎºÎÅÍ userService ½ºÇÁ¸µ ºóÀ» DLÀ» ÅëÇØ ¾ò¾î¿À°í, getUser ¸Ş¼Òµå¸¦ call, ¹İÈ¯µÈ °ª(userVo)À» logger¸¦ ÅëÇØ Ãâ·Â
+		//ìŠ¤í”„ë§ ì»¨í…Œì´ë„ˆë¡œë¶€í„° userService ìŠ¤í”„ë§ ë¹ˆì„ DLì„ í†µí•´ ì–»ì–´ì˜¤ê³ , getUser ë©”ì†Œë“œë¥¼ call, ë°˜í™˜ëœ ê°’(userVo)ì„ loggerë¥¼ í†µí•´ ì¶œë ¥
 		UserService userService = (UserService)context.getBean("userService");
 		
-		UserVo userVo2 = userService.getUser("brown");
+		UserVo userVo2 = userService.selectUser("brown");
 		logger.debug("userVo(Service) :{}", userVo2);
 		
 		for(String beanName : context.getBeanDefinitionNames()){

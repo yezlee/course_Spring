@@ -2,9 +2,14 @@ package kr.or.ddit.ioc.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
-//¿©±â¼­ ¾²´Â ÆĞÅ°Áö¸íÀÇ ÆĞ½º´Â ½ºÇÁ¸µ ºóÀÌ°Ç ¾Æ´Ï°Ç ÀüÇô »ó°ü¾ø¾î. ±â´ÉÀº ±×³É ¾ê°¡ ¼ÓÇÑ ÆĞÅ°Áö°¡ ¾îµòÁö ±×°É ¾Æ´Â°Å....?
-//ConponentScanI¶ó´Â ½ºÄµÀ» À§ÇÑ Å¬·¡½º¸¦ ¸¸µé±âµµ ÇÔ - ¼±»ı´Ô ¿¹
+
+//ë¬¸ìì—´ë¡œ ì „ì²´ package ë¥¼ ì¨ì¤˜ë„ ë˜ê³ , interface(í•´ë‹¹ ì¸í„°í˜ì´ìŠ¤ê°€ ì†í•œ íŒ¨í‚¤ì§€ ì •ë³´ë§Œ ì¶”ì¶œí•´ì„œ )ë¥¼ ë§Œë“¤ì–´ì„œ (basePackage ìš©) 
+//interfaceì´ë¦„.class ë¡œ ì¨ì¤˜ë„ ëœë‹¤ 
+//ì—¬ê¸°ì„œ ì“°ëŠ” íŒ¨í‚¤ì§€ëª…ì˜ íŒ¨ìŠ¤ëŠ” ìŠ¤í”„ë§ ë¹ˆì´ê±´ ì•„ë‹ˆê±´ ì „í˜€ ìƒê´€ì—†ì–´. ê¸°ëŠ¥ì€ ê·¸ëƒ¥ ì–˜ê°€ ì†í•œ íŒ¨í‚¤ì§€ê°€ ì–´ë”˜ì§€ ê·¸ê±¸ ì•„ëŠ”ê±°....?
+//ConponentScanIë¼ëŠ” ìŠ¤ìº”ì„ ìœ„í•œ í´ë˜ìŠ¤ë¥¼ ë§Œë“¤ê¸°ë„ í•¨ - ì„ ìƒë‹˜ ì˜ˆ
+@ImportResource("classpath:/kr/or/ddit/config/spring/datasource-context.xml")
 @ComponentScan(basePackages = {"kr.or.ddit"})
 @Configuration
 public class ComponetScanJavaConfig {

@@ -1,0 +1,175 @@
+사용자 전체 리스트 개발 완료
+
+사용자 페이징 처리
+페이징 처리를 위해 필요한 값
+1. 정렬기준 - userid
+2. 페이지 사이즈
+3. 페이지
+
+user/pagingUser ==> 페이지, 페이지 사이즈 파라미터를 보내지 않음
+					페이지, 페이지 사이즈 파라미터가 없을 경우 servlet 기본 값 처리를 함
+					 1      5   
+
+String pageStr = request.getParameter("page");
+String pageSizeStr = request.getParameter("pageSize");	 
+			 
+int page = pageStr == null ?  1 : Integer.parseInt(pageStr);
+int pageSize = pageSizeStr==null ? 5:Integer.parseInt(pageSizeStr); 
+
+
+-------------
+
+@RequestParam
+
+**메소드 인자에서 사용가능한 어노테이션
+
+1. 바인딩 될 파라미터 설정(name)
+	파라미터 명과 메소드 인자 명이 다를 경우 자동 바인딩이 되지 않는 문제를 해결
+	파라미터명을 명시함으로써 메소드 인자에 자동 바인딩이 될 수 있도록 설정
+
+2. 파라미터가 존재하지 않을 경우 기본값 설정(defaultValue)	
+	파라미터가 존재하지 않을 경우, 메소드 인자를 primitive type으로 선언한 경우 에러 발생
+	==> defaultValue 설정으로 에러 방지 기능
+	
+3. 파라미터 존재 여부 설정(required, 기본값은 true)
+	파라미터가 반드시 필요한지 여부를 설정
+	단 defaultValue설정시 자동으로 false로 설정된다.	
+	
+	
+	
+
+@ModelAttribute - 엄청중요하진(사용빈도가 떨어짐) 않지만 그래도 배우자. 두가지 방법있어서 헷갈림
+1. 메소드 선언 
+	@RequestMapping 어노테이션이 붙은 메소드가 실행되기전에 먼저 실행되고
+	해당 메소드가 리턴하는 값을 Model객체에 넣어준다.
+	
+	@ModelAttribute
+	public List<String> rangers(){
+		...
+		return list;
+	}
+	
+	@RequestMapping("list")
+	public String view(Model model){
+		return "view";
+	}
+	
+	localhost/user/list ==> rangers() ==> model ==> list
+	localhost/user/list2 ==> rangers() ==> model ==> list2
+	
+	@Before ==> @Test
+	@Before ==> @Test
+	@Before ==> @Test
+	
+	이거랑 비슷한것임.
+	공통적인게 필요할때 사용.
+	
+	
+2. 파라미터 인자
+Model 객체에 저장된 속성을 파라미터 인자에 바인딩 가능
+
+command 객체의 경우 @ModelAttribute 어노테이션을 적용하지 않더라고 model 객체에 자동으로 등록이 된다. 
+- 스프링으로 개발하다보면 내가 넣지않았는데 들어가는 게 생김. 그게 자동으로 등록된거.. 그게 헷갈려서 싫으면 그냥 담음됨 command 객체만 담김. primitive애들은 안됨
+
+
+
+
+
+
+@SessionAttribute
+- HelloController.java에 logger.debug("hellocontroller.rangers()"); 적용함
+
+class에 적용
+
+@ModelAttribute가 적용된 메소드가 @RequestMapping이 적용된 메소드 실행전 항상 호출 되는 부하를 줄이는 것이 목적
+(과제에서 했던 left.nav 만큼은 이게 적용가능함. 근데 일반적으로는 메뉴를 모든 사용자에게 권한을 주지 않기때문에 사용하진 않음)
+
+최초 1회에 대해서는 @ModelAttribute가 적용된 메소드를 호출하여 해당 속성 값을 세션에 적용
+
+그 이후 호출에 대해서는 세션에 저장된 값을 사용하여 @ModelAttribute 메소드가 적용된 로직이 반복 호출 되는 것을 방지
+==> cache 
+
+
+
+
+
+
+@pathVariable : url의 일부를 메소드 인자로 바인딩 **** 중요
+	- 사용: 메소드 인자
+1. @RequestMapping path 설정시 어떤 부분을 가져올지 표현해줘야함
+	==> @RequestMapping("hello/{path}")
+2. 메소드 인자에 @PathVariable을 통해 가져올 값을 바인딩
+	public String view (@PathVariable("path") String path){
+	}
+
+
+
+@RequestParam : 파라미터값을 메소드 인자로 바인딩할때
+@RequestHeader : 헤더 정보를 메소드 인자로 바인딩 할 때
+
+
+파일 업로드시 작업 내역
+1. 서블릿
+	- form태그 enctype = "multipart/form-data"
+	- form태그 method = "post"
+	- <input type="file"/>
+	- 서블릿에서 @multipartConfig
+	
+	파일정보 : Part part = request.getPart("file");
+	
+	
+2. Spring
+	- form태그 enctype = "multipart/form-data"
+	- form태그 method = "post"
+	- <input type="file"/>
+	- **** multipartResolver 라는 스프링 빈 등록 CommonsMultipartResolver
+	
+	파일정보 : MultipartFile 
+	
+	부모 - 컨트롤러 - 여기다 하면 부모 자식 둘다 쓸수 있지만, 컨트롤러엔 필요가 없으니까 자식에다 하면되지
+	자식 - (application-context.xml)
+		
+	
+	
+@RequestPart - 파일 업로드 : @RequestParam과 유사
+
+
+
+
+
+
+복수파라미터 전송
+- 메소드 인자로 List ==> X List<String> 인자 - 이런거 안되고
+- 메소드 인자로 배열 ==> O String[] 인자     - 이런건 돼.
+- 메소드 인자로 리스트를 필드로 하는 command 객체 ==> UsersVo userVo 이런건 또 돼..
+	public UsersVo{
+		private List<String> userids;
+		private List<String> usernms;
+	}
+			==> 이런식으로는 또 된다. 리스트를 꼭 써야하면 필드로 만들어서 사용하면 됨.
+			
+			
+
+
+
+스프링 MVC 실습
+1. 사용자 상세 페이지 (제외 사항 : 사용자 사진, 엑스박스로 떠도 상관 없음)
+2. 사용자 수정 페이지 (파일 업로드까지 전체 이관)
+3. 사용자 등록 페이지 (파일 업로드까지 전체 이관)
+4. 사용자 삭제 기능(전체 이관)
+
+5. 테스트 코드 작성 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

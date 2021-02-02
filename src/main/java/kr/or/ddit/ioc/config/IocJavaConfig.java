@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
@@ -16,7 +17,8 @@ import kr.or.ddit.user.repository.UserDao;
 import kr.or.ddit.user.repository.UserDaoImpl;
 import kr.or.ddit.user.service.UserServiceImpl;
 
-//½ºÇÁ¸µ ÇÁ·¹ÀÓ ¿öÅ©¿¡°Ô ÇØ´ç ÀÚ¹Ù ÆÄÀÏÀÌ ½ºÇÁ¸µ ¼³Á¤ ÆÄÀÏÀÓÀ» ¾Ë·ÁÁØ´Ù. @Configuration 
+//ìŠ¤í”„ë§ í”„ë ˆì„ ì›Œí¬ì—ê²Œ í•´ë‹¹ ìë°” íŒŒì¼ì´ ìŠ¤í”„ë§ ì„¤ì • íŒŒì¼ì„ì„ ì•Œë ¤ì¤€ë‹¤. @Configuration 
+@ImportResource("classpath:/kr/or/ddit/config/spring/datasource-context.xml")
 @PropertySource(value = {"classpath:/kr/or/ddit/config/db/dbinfo.properties"})
 @Configuration
 public class IocJavaConfig {
@@ -34,10 +36,10 @@ public class IocJavaConfig {
 	private String password;
 	
 	
-	//¸Ş¼Òµå¸¦ ¸¸µå´Âµ¥, ½ºÇÁ¸µ ºóÀ¸·Î ¸¸µé °´Ã¼¸¦ ¹İÈ¯ÇÏ´Â ¸Ş¼Òµå¸¦ »ı¼º.
-	//					¸Ş¼Òµå¿¡ @BeanÀÌ¶ó´Â ¾î³ëÅ×ÀÌ¼ÇÀ» Àû¿ë - ÀÌ°Å ºÙÀÌ¸é ¹İÈ¯ÇÏ´Â°Ô ½ºÇÁ¸µ°´Ã¼·Î ¹İÈ¯
-	//					@Bean ¾î³ëÅ×ÀÌ¼Ç¿¡ º°´Ù¸¥ ¿É¼ÇÀ» Àû¿ëÇÏÁö ¾ÊÀ¸¸é »ı¼ºµÈ ½ºÇÁ¸µ ºóÀÇ ÀÌ¸§Àº ¸Ş¼Òµå ÀÌ¸§À¸·Î Àû¿ëµÈ´Ù.
-	//					@Bean¾î³ëÅ×ÀÌ¼ÇÀÇ name¼Ó¼ºÀ» ÅëÇØ ½ºÇÁ¸µ ºó ÀÌ¸§ ¼³Á¤ °¡´É. - repositoryÀÌ¸§ÀÌ Å¬·¡½ºÀÌ¸§ µû¿À´ø°ÍÃ³·³
+	//ë©”ì†Œë“œë¥¼ ë§Œë“œëŠ”ë°, ìŠ¤í”„ë§ ë¹ˆìœ¼ë¡œ ë§Œë“¤ ê°ì²´ë¥¼ ë°˜í™˜í•˜ëŠ” ë©”ì†Œë“œë¥¼ ìƒì„±.
+	//					ë©”ì†Œë“œì— @Beanì´ë¼ëŠ” ì–´ë…¸í…Œì´ì…˜ì„ ì ìš© - ì´ê±° ë¶™ì´ë©´ ë°˜í™˜í•˜ëŠ”ê²Œ ìŠ¤í”„ë§ê°ì²´ë¡œ ë°˜í™˜
+	//					@Bean ì–´ë…¸í…Œì´ì…˜ì— ë³„ë‹¤ë¥¸ ì˜µì…˜ì„ ì ìš©í•˜ì§€ ì•Šìœ¼ë©´ ìƒì„±ëœ ìŠ¤í”„ë§ ë¹ˆì˜ ì´ë¦„ì€ ë©”ì†Œë“œ ì´ë¦„ìœ¼ë¡œ ì ìš©ëœë‹¤.
+	//					@Beanì–´ë…¸í…Œì´ì…˜ì˜ nameì†ì„±ì„ í†µí•´ ìŠ¤í”„ë§ ë¹ˆ ì´ë¦„ ì„¤ì • ê°€ëŠ¥. - repositoryì´ë¦„ì´ í´ë˜ìŠ¤ì´ë¦„ ë”°ì˜¤ë˜ê²ƒì²˜ëŸ¼
 
 	
 	//<bean id ="userDao" class="kr.or.ddit.user.repository.UserDaoImpl"/> 
@@ -66,16 +68,16 @@ public class IocJavaConfig {
 	
 	
 	/*
-		<!--  »ı¼ºÀÚ ÁÖÀÔ  -->
-		<!-- 2. »ı¼ºÀÚ : ÁÖÀÔ ¹ŞÀ¸·Á´Â ºóÀ» ÀÎÀÚ·Î ÇÏ´Â »ı¼ºÀÚ°¡ Á¸Àç ÇØ¾ßÇÔ(xml, java¼³Á¤ÆÄÀÏ) -->
+		<!--  ìƒì„±ì ì£¼ì…  -->
+		<!-- 2. ìƒì„±ì : ì£¼ì… ë°›ìœ¼ë ¤ëŠ” ë¹ˆì„ ì¸ìë¡œ í•˜ëŠ” ìƒì„±ìê°€ ì¡´ì¬ í•´ì•¼í•¨(xml, javaì„¤ì •íŒŒì¼) -->
 		<bean id="userServiceCons" class="kr.or.ddit.user.service.UserServiceImpl">
 			<constructor-arg ref="userDao"></constructor-arg>
 		</bean>
 		
-		userServiceImpl¿¡¼­ 
+		userServiceImplì—ì„œ 
 		public UserServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
-		ÀÌ°Ô ¾Æ·¡¶û °°Àº ¸Æ¶ô
+		ì´ê²Œ ì•„ë˜ë‘ ê°™ì€ ë§¥ë½
 	}
 	 */
 	@Bean
@@ -89,7 +91,7 @@ public class IocJavaConfig {
 	
 	
 	/*
-		 <!-- prototype : ÇØ´ç ºóÀ» dl, di ÇÒ¶§¸¶´Ù ¸Å¹ø »õ·Ó°Ô ¸¸µç °´Ã¼¸¦ ¹İÈ¯ -->
+		 <!-- prototype : í•´ë‹¹ ë¹ˆì„ dl, di í• ë•Œë§ˆë‹¤ ë§¤ë²ˆ ìƒˆë¡­ê²Œ ë§Œë“  ê°ì²´ë¥¼ ë°˜í™˜ -->
 		<bean id="userServicePrototype" class="kr.or.ddit.user.service.UserServiceImpl" scope="prototype">
 			<property name="userDao" ref="userDao"></property>
 		</bean> 
@@ -133,7 +135,7 @@ public class IocJavaConfig {
 	
 	/*
 		 <context:property-placeholder location="classpath:/kr/or/ddit/config/db/dbinfo.properties"/>
-		 ÀÌ°Ç À§¿¡´Ù°¡ ¼³Á¤ÇØÁÜ
+		 ì´ê±´ ìœ„ì—ë‹¤ê°€ ì„¤ì •í•´ì¤Œ
 		 
 		<bean id="dbConfig" class="kr.or.ddit.ioc.DbConfig">
 			<property name="driverClassName" value="${jdbc.driverClassName}"></property>
@@ -152,24 +154,6 @@ public class IocJavaConfig {
 		
 		return dbConfig;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

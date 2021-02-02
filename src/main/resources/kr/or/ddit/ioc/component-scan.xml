@@ -10,8 +10,7 @@
 								base-package="kr.or.ddit.user, kr.or.ddit.login"
 								이런식으로
 								
-		기본적으로 스캔 대상이 되는 annotation : @Controller, @Service, @Repository, @Component
-		@Component 얘는 기타 등등에 해당
+		기본적으로 스캔 대상이 되는 annotation : @Controller, @Service, @Repository, @Component, @Component 얘는 기타 등등에 해당
 		
 		@Resource, @Autowired, @Injection등 주입과 관련된 어노테이션에 대해서도 처리
 		

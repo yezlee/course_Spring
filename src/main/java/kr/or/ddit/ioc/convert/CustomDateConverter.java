@@ -11,14 +11,14 @@ public class CustomDateConverter implements Converter<String, Date>{
 	
 	private String dateFormat;
 	
-	//xmlÆÄÀÏ¿¡¼­ ¼¼ÅÍ¸¸ ÇÊ¿äÇØ¼­ ¸¸µê
+	//xmlíŒŒì¼ì—ì„œ ì„¸í„°ë§Œ í•„ìš”í•´ì„œ ë§Œë“¦
 	public void setDateFormat(String dateFormat) {
 		this.dateFormat = dateFormat;
 	}
 
 
 
-	//source : 2021-01-11 , ±×¸®°í ¿ì¸° ¾Ï¹¬ÀûÀ¸·Î ³¯Â¥ Çü½ÄÀÌ yyyy-mm-dd¶ó°í ÇÏÀÚ
+	//source : 2021-01-11 , ê·¸ë¦¬ê³  ìš°ë¦° ì•”ë¬µì ìœ¼ë¡œ ë‚ ì§œ í˜•ì‹ì´ yyyy-mm-ddë¼ê³  í•˜ì
 	@Override
 	public Date convert(String source) {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);

@@ -1,29 +1,67 @@
 package kr.or.ddit.user.repository;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.common.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
 
 
-// <bean id="" class=""  ±Ùµ¥ Å¬·¡½º´Â ÀÌ¹Ì¹ºÁö ¾Ë¾Æ. ¾ÆÀÌµğ°¡ ¹®Á¦
-// @Repository ¿¡¼­ º°´Ù¸¥ ¼³Á¤À» ÇÏÁö ¾ÊÀ¸¸é ½ºÇÁ¸µ ºó ÀÌ¸§À¸·Î classÀÌ¸§¿¡¼­ Ã¹±ÛÀÚ¸¦ ¼Ò¹®ÀÚ·Î ÇÑ ¹®ÀÚ¿­ÀÌ ½ºÇÁ¸µ ºó ÀÌ¸§À¸·Î ¼³Á¤µÈ´Ù.
+// <bean id="" class=""  ê·¼ë° í´ë˜ìŠ¤ëŠ” ì´ë¯¸ë­”ì§€ ì•Œì•„. ì•„ì´ë””ê°€ ë¬¸ì œ
+// @Repository ì—ì„œ ë³„ë‹¤ë¥¸ ì„¤ì •ì„ í•˜ì§€ ì•Šìœ¼ë©´ ìŠ¤í”„ë§ ë¹ˆ ì´ë¦„ìœ¼ë¡œ classì´ë¦„ì—ì„œ ì²«ê¸€ìë¥¼ ì†Œë¬¸ìë¡œ í•œ ë¬¸ìì—´ì´ ìŠ¤í”„ë§ ë¹ˆ ì´ë¦„ìœ¼ë¡œ ì„¤ì •ëœë‹¤.
 // UserDaoImpl ==> userDaoImpl
 
 
-// ³×ÀÌ¹Ö : ÀÎÅÍÆäÀÌ½º´Â UserDao ±¸ÇöÇÏ´ÂÅ¬·¡½º UserDaoImpl ==> @Resource(name="userDaoImpl")
-// ±Ùµ¥ ¿¹Àü¿¡ ÀÎÅÍÆäÀÌ½º¸¦ UserDaoI ·Î ÇÏ°í ±¸ÇöÅ¬·¡½º¸¦ UserDao·Î ÇÑÀû ÀÖ¾ú¾î ÀÌ°É ¹Ù²ãÁÖ·Á¸é ÀÌ¸§À» ÁöÁ¤ÇØÁÖ¸éµÅ @Repository("userDao") ÀÌ·¸°Ô ÇÏ¸é Å×½ºÆ®¿¡´Ù°¡ @Resource(name="userDao")
+// ë„¤ì´ë° : ì¸í„°í˜ì´ìŠ¤ëŠ” UserDao êµ¬í˜„í•˜ëŠ”í´ë˜ìŠ¤ UserDaoImpl ==> @Resource(name="userDaoImpl")
+// ê·¼ë° ì˜ˆì „ì— ì¸í„°í˜ì´ìŠ¤ë¥¼ UserDaoI ë¡œ í•˜ê³  êµ¬í˜„í´ë˜ìŠ¤ë¥¼ UserDaoë¡œ í•œì  ìˆì—ˆì–´ ì´ê±¸ ë°”ê¿”ì£¼ë ¤ë©´ ì´ë¦„ì„ ì§€ì •í•´ì£¼ë©´ë¼ @Repository("userDao") ì´ë ‡ê²Œ í•˜ë©´ í…ŒìŠ¤íŠ¸ì—ë‹¤ê°€ @Resource(name="userDao")
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao{
+	
+	@Resource(name = "sqlSessionTemplate")
+	private SqlSessionTemplate template;
+	
+	@Override
+	public UserVo selectUser(String userid) {
+		return template.selectOne("users.selectUser", userid);
+	}
 
 	@Override
-	public UserVo getUser(String userid) {
-		//¿ø·¡´Â µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ Á¶È¸¸¦ ÇØ¾ßÇÏ³ª, °³¹ß ÃÊ±â´Ü°è¶ó ¼³Á¤ÀÌ ¿Ï·áµÇÁö ¾ÊÀ½, ÇöÀç È®ÀÎÇÏ·Á°í ÇÏ´Â ±â´ÉÀº ½ºÇÁ¸µ ÄÁÅ×ÀÌ³Ê¿¡ ÃÊÁ¡À» ¸ÂÃß±âÀ§ÇØ
-		//new ¿¬»êÀÚ¸¦ ÅëÇØ »ı¼ºÇÑ vo°´Ã¼¸¦ ¹İÈ¯
-		
-		return new UserVo("brown", "ºê¶ó¿î");
-		
+	public List<UserVo> selectAllUsers() {
+		return template.selectList("users.selectAllUser");
 	}
+
+	@Override
+	public List<UserVo> selectPagingUser(PageVo vo) {
+		return template.selectList("users.selectPagingUser", vo);
+	}
+
+	@Override
+	public int selectAllUserCnt() {
+		return template.selectOne("users.selectAllUserCnt");
+	}
+
+	@Override
+	public int modifyUser(UserVo userVo) {
+		return template.update("users.modifyUser", userVo);
+	}
+
+	@Override
+	public int insertUser(UserVo userVo) {
+		return template.insert("users.insertUser", userVo);
+	}
+
+	@Override
+	public int deleteUser(String userid) {
+		return template.delete("users.deleteUser", userid);
+	}
+	
+	
+	
+	
 }

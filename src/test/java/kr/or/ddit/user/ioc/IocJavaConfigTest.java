@@ -6,12 +6,14 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.or.ddit.ioc.DbConfig;
 import kr.or.ddit.ioc.config.IocJavaConfig;
 import kr.or.ddit.user.service.UserService;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {IocJavaConfig.class})
@@ -40,7 +42,7 @@ public class IocJavaConfigTest {
 	
 	
 	
-	//userServiceCons ½ºÇÁ¸µ ºóÀÌ Á¤»óÀûÀ¸·Î »ı¼ºµÇ¾ú´ÂÁö Å×½ºÆ®
+	//userServiceCons ìŠ¤í”„ë§ ë¹ˆì´ ì •ìƒì ìœ¼ë¡œ ìƒì„±ë˜ì—ˆëŠ”ì§€ í…ŒìŠ¤íŠ¸
 	@Test
 	public void UserServiceConstest() {
 		
@@ -51,8 +53,8 @@ public class IocJavaConfigTest {
 	@Test
 	public void beanScopeTest() {
 		
-		//µğÀÚÀÎ ÆĞÅÏÀÇ ½Ì±ÛÅæ °³³äÀ¸·Î º¸¸é µÎ°³ÀÇ °´Ã¼´Â ÇÑ Å¬·¡½º·Î ºÎÅÍ ³ª¿ÔÀ¸¹Ç·Î µ¿ÀÏÇØ¾ßÇÔ
-		//ÇÏÁö¸¸ ½ºÇÁ¸µÀÇ ½Ì±ÛÅæ °³³äÀº bean ¿¤¸®¸ÕÆ®¸¦ ±âÁØÀ¸·Î ÇÏ³ªÀÇ °´Ã¼°¡ »ı¼ºµÈ´Ù. ±×·¡¼­ not equals
+		//ë””ìì¸ íŒ¨í„´ì˜ ì‹±ê¸€í†¤ ê°œë…ìœ¼ë¡œ ë³´ë©´ ë‘ê°œì˜ ê°ì²´ëŠ” í•œ í´ë˜ìŠ¤ë¡œ ë¶€í„° ë‚˜ì™”ìœ¼ë¯€ë¡œ ë™ì¼í•´ì•¼í•¨
+		//í•˜ì§€ë§Œ ìŠ¤í”„ë§ì˜ ì‹±ê¸€í†¤ ê°œë…ì€ bean ì—˜ë¦¬ë¨¼íŠ¸ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í•˜ë‚˜ì˜ ê°ì²´ê°€ ìƒì„±ëœë‹¤. ê·¸ë˜ì„œ not equals
 		assertNotEquals(userService, userServiceCons);		
 		
 	}
@@ -60,7 +62,7 @@ public class IocJavaConfigTest {
 	@Test
 	public void beanScopeTest2() {
 		
-		//µ¿ÀÏÇÑ ½ºÇÁ¸µ ºóÀ» ÁÖÀÔ¹Ş¾ÒÀ¸¹Ç·Î userService, userService2´Â °°Àº °´Ã¼´Ù.
+		//ë™ì¼í•œ ìŠ¤í”„ë§ ë¹ˆì„ ì£¼ì…ë°›ì•˜ìœ¼ë¯€ë¡œ userService, userService2ëŠ” ê°™ì€ ê°ì²´ë‹¤.
 		assertEquals(userService, userService2);
 	}
 	
@@ -68,7 +70,7 @@ public class IocJavaConfigTest {
 	@Test
 	public void beanScopePrototypeTest() {
 		
-		//µ¿ÀÏÇÑ userServiceProtytype ºó¿¡ ÁÖÀÔ(scope : prototype)
+		//ë™ì¼í•œ userServiceProtytype ë¹ˆì— ì£¼ì…(scope : prototype)
 		assertNotEquals(userServicePrototype, userServicePrototype2);
 	}
 	
@@ -76,9 +78,9 @@ public class IocJavaConfigTest {
 	@Test
 	public void propertyPlaceholderTest() {
 		assertNotNull(dbconfig);
-		assertEquals("yez", dbconfig.getUserName());
+		assertEquals("System", dbconfig.getUserName());
 		assertEquals("java", dbconfig.getPassword());
-		assertEquals("jdbc:oracle:thin:@112.220.114.130:1521:xe", dbconfig.getUrl());
+		assertEquals("jdbc:oracle:thin:@localhost:1521:xe", dbconfig.getUrl());
 		assertEquals("oracle.jdbc.driver.OracleDriver", dbconfig.getDriverClassName());
 	}
 	

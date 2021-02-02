@@ -2,7 +2,7 @@ package kr.or.ddit.ioc;
 
 public class DbConfig {
 	
-	//ÁßÇÁ¿¡¼± ÀÌ°Å ÇÁ·ÎÆÛÆ¼½º¾È¿¡´Ù°¡ ³ÖÀ½
+	//ì¤‘í”„ì—ì„  ì´ê±° í”„ë¡œí¼í‹°ìŠ¤ì•ˆì—ë‹¤ê°€ ë„£ìŒ
 	private String url;
 	private String driverClassName;
 	private String userName;

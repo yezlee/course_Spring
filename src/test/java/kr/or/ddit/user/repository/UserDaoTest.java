@@ -1,42 +1,38 @@
 package kr.or.ddit.user.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import kr.or.ddit.test.config.ModelTestConfig;
 import kr.or.ddit.user.model.UserVo;
 
-//Å×½ºÆ®´Â ¸ŞÀÎ¸Ş¼Òµå°¡ ¾ø´Âµ¥ ½ÇÇàµÈ´Ù. ¾î¶»°Ô????????? 
-//==> ¾îµò°¡¿¡ ¸ŞÀÎÀ» ½ÇÇàÇØÁÖ´Â °Ô ÀÖ´Ù.
-//ÀÌ°Ç ¿ö³«¿¡ ÀÚÁÖ ¾²´Â°Å¶ó¼­ ÀÌÅ¬¸³½º¿¡¼­ ÀÚÃ¼ÀûÀ¸·Î ¸¸µé¾î³õÀ½
-// eclipse, maven - junitÀÌ ¸ŞÀÎ¸Ş¼Òµå°¡ ¾ø´Âµ¥ ½ÇÇàÀÌ µÇ´ÂÀÌÀ¯°¡ Àú µÎ°³¿¡¼­ ¸ŞÀÎ¸Ş¼Òµå¸¦ ½ÇÇàÇØÁÖ´Ï±î
+//í…ŒìŠ¤íŠ¸ëŠ” ë©”ì¸ë©”ì†Œë“œê°€ ì—†ëŠ”ë° ì‹¤í–‰ëœë‹¤. ì–´ë–»ê²Œ????????? 
+//==> ì–´ë”˜ê°€ì— ë©”ì¸ì„ ì‹¤í–‰í•´ì£¼ëŠ” ê²Œ ìˆë‹¤.
+//ì´ê±´ ì›Œë‚™ì— ìì£¼ ì“°ëŠ”ê±°ë¼ì„œ ì´í´ë¦½ìŠ¤ì—ì„œ ìì²´ì ìœ¼ë¡œ ë§Œë“¤ì–´ë†“ìŒ
+// eclipse, maven - junitì´ ë©”ì¸ë©”ì†Œë“œê°€ ì—†ëŠ”ë° ì‹¤í–‰ì´ ë˜ëŠ”ì´ìœ ê°€ ì € ë‘ê°œì—ì„œ ë©”ì¸ë©”ì†Œë“œë¥¼ ì‹¤í–‰í•´ì£¼ë‹ˆê¹Œ
 
+//ìŠ¤í”„ë§ í™˜ê²½ì—ì„œ jUnit ì½”ë“œë¥¼ ì‹¤í–‰ ==> jUnitì½”ë“œë„ ìŠ¤í”„ë§ ë¹ˆìœ¼ë¡œ ë“±ë¡(ìŠ¤í”„ë§ë¹ˆìœ¼ë¡œ ë“±ë¡ì´ ë˜ì–´ìˆì–´ì•¼ ì£¼ì…ì´ ê°€ëŠ¥í•˜ë‹¤!!!!!)
+/*@RunWith(SpringJUnit4ClassRunner.class)
+//ì„¤ì •ì •ë³´ë¥¼ ì•Œë ¤ì£¼ëŠ” ì–´ë…¸í…Œì´ì…˜
+@ContextConfiguration("classpath:/kr/or/ddit/ioc/ioc.xml")*/
+public class UserDaoTest extends ModelTestConfig {
 
-//½ºÇÁ¸µ È¯°æ¿¡¼­ jUnit ÄÚµå¸¦ ½ÇÇà ==> jUnitÄÚµåµµ ½ºÇÁ¸µ ºóÀ¸·Î µî·Ï(½ºÇÁ¸µºóÀ¸·Î µî·ÏÀÌ µÇ¾îÀÖ¾î¾ß ÁÖÀÔÀÌ °¡´ÉÇÏ´Ù!!!!!)
-@RunWith(SpringJUnit4ClassRunner.class)
-//¼³Á¤Á¤º¸¸¦ ¾Ë·ÁÁÖ´Â ¾î³ëÅ×ÀÌ¼Ç
-@ContextConfiguration("classpath:/kr/or/ddit/ioc/ioc.xml")
-public class UserDaoTest {
-	
-
-	@Resource(name="userDao")
+	@Resource(name = "userDao")
 	private UserDao userDao;
-	
+
 	@Test
 	public void getUserTest() {
-		/***Given***/
+		/*** Given ***/
 		String userid = "brown";
 
-		/***When***/
-		UserVo userVo = userDao.getUser(userid); 
+		/*** When ***/
+		UserVo userVo = userDao.selectUser(userid);
 
-		/***Then***/
-		assertEquals("ºê¶ó¿î", userVo.getUsernm());
+		/*** Then ***/
+		assertEquals("ë¸Œë¼ìš´", userVo.getUsernm());
 	}
 
 }

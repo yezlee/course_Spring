@@ -9,40 +9,41 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import kr.or.ddit.ioc.config.ComponetScanJavaConfig;
+import kr.or.ddit.test.config.WebTestConfig;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.repository.UserDao;
 import kr.or.ddit.user.service.UserService;
 
-@ContextConfiguration(classes = {ComponetScanJavaConfig.class})
+//@ContextConfiguration(classes = {ComponetScanJavaConfig.class})
+@ContextConfiguration("classpath:/kr/or/ddit/ioc/component-scan.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ComponentScanJavaTest {
+public class ComponentScanJavaTest extends WebTestConfig{
 
 	
 	@Resource(name="userDao")
 	private UserDao userDao;
 	
-	@Resource(name="userServiceImpl")
+	@Resource(name="userService")
 	private UserService userService;
 	
-	//@Repository ¾î³ëÅ×ÀÌ¼ÇÀ» Àû¿ëÇÑ userDaoImpl ½ºÇÁ¸µ ºóÀÌ Á¤»óÀûÀ¸·Î ÄÁÅ×ÀÌ³Ê¿¡ µî·Ï µÇ¾ú´ÂÁö È®ÀÎ
+	//@Repository ì–´ë…¸í…Œì´ì…˜ì„ ì ìš©í•œ userDaoImpl ìŠ¤í”„ë§ ë¹ˆì´ ì •ìƒì ìœ¼ë¡œ ì»¨í…Œì´ë„ˆì— ë“±ë¡ ë˜ì—ˆëŠ”ì§€ í™•ì¸
 	@Test
 	public void userDaoImplSpringBeanTest() {
 		assertNotNull(userDao);
 		
-		UserVo userVo = userDao.getUser("brown");
-		assertEquals("ºê¶ó¿î", userVo.getUsernm());
+		UserVo userVo = userDao.selectUser("brown");
+		assertEquals("ë¸Œë¼ìš´", userVo.getUsernm());
 	}
 
 	
 	
-	//userServiceImpl ½ºÇÁ¸µ ºóÀÌ Á¤»èÀûÀ¸·Î ÄÁÅ×ÀÌ³Ê¿¡ µî·Ï µÇ¾ú´ÂÁö È®ÀÎ
+	//userServiceImpl ìŠ¤í”„ë§ ë¹ˆì´ ì •ì‚­ì ìœ¼ë¡œ ì»¨í…Œì´ë„ˆì— ë“±ë¡ ë˜ì—ˆëŠ”ì§€ í™•ì¸
 	@Test
 	public void userServiceImplSpringBeanTest() {
 		assertNotNull(userService);
 		
-		UserVo userVo = userService.getUser("brown");
-		assertEquals("ºê¶ó¿î", userVo.getUsernm());
+		UserVo userVo = userService.selectUser("brown");
+		assertEquals("ë¸Œë¼ìš´", userVo.getUsernm());
 	}
 
 	

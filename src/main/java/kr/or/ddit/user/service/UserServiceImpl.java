@@ -1,36 +1,36 @@
 package kr.or.ddit.user.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.common.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.repository.UserDao;
 
-@Service
+@Service("userService") // ì´ë¦„ì„¤ì •ì„ ì•ˆí•´ë†“ìœ¼ë©´ UserServiceImplì´ê±¸ë¡œ ì´ë¦„ì„ ë””í´íŠ¸ë¡œ ë§Œë“¤ì–´ë²„ë ¤ì„œ í…ŒìŠ¤íŠ¸ì½”ë“œ ì—ëŸ¬ëœ¸
 public class UserServiceImpl implements UserService{
-	
-	//´Ù¸¥ ½ºÇÁ¸µºóÀ» ÁÖÀÔÇÏ´Â ¾î³ëÅ×ÀÌ¼Ç Áß ÇÏ³ª°¡ ¸®¼Ò½º
-	//³×ÀÓÀº ´Ù¿ÀÀÓÇÃ¿¡ ÀÖ´Â @Repository("userDao") ¿©±â¼­ °®°í¿À°Å³ª ¸¸¾à¿¡ ¸®Æ÷ÁöÅä¸®°¡ ¾øÀ¸¸é µğÆúÆ®·Î »ı¼ºµÈ Å¬·¡½ºÀÌ¸§ ¾Õ¿¡ ¼Ò¹®ÀÚ·Î ¹Ù²Û°Å ±×°Å °¡Á®¿À¸é µÈ´Ù.
+
+	//ë‹¤ë¥¸ ìŠ¤í”„ë§ë¹ˆì„ ì£¼ì…í•˜ëŠ” ì–´ë…¸í…Œì´ì…˜ ì¤‘ í•˜ë‚˜ê°€ ë¦¬ì†ŒìŠ¤
+	//ë„¤ì„ì€ ë‹¤ì˜¤ì„í”Œì— ìˆëŠ” @Repository("userDao") ì—¬ê¸°ì„œ ê°–ê³ ì˜¤ê±°ë‚˜ ë§Œì•½ì— ë¦¬í¬ì§€í† ë¦¬ê°€ ì—†ìœ¼ë©´ ë””í´íŠ¸ë¡œ ìƒì„±ëœ í´ë˜ìŠ¤ì´ë¦„ ì•ì— ì†Œë¬¸ìë¡œ ë°”ê¾¼ê±° ê·¸ê±° ê°€ì ¸ì˜¤ë©´ ëœë‹¤.
 	@Resource(name="userDao")
 	private UserDao userDao;
 	
 	/*
-	 * Multiple annotations found at this line: - No constructor with 0 arguments
+	 * Multiple annotations found at this line: - No constructor with 0 arguments(ì¸ìˆ˜, íŒŒë¼ë¯¸í„°ì— ì‹¤ì œë¡œ ë‹´ê¸°ëŠ” ê°’)
 	 * defined in class 'kr.or.ddit.user.service.UserServiceImpl'
 	 * 
-	 * ±âº»»ı¼ºÀÚ°¡ ¾ø´Ü´Ù... ¾Æ·¡ ¸¸µé¾îÁÖ¸é¼­
+	 * ê¸°ë³¸ìƒì„±ìê°€ ì—†ë‹¨ë‹¤... ì•„ë˜ ë§Œë“¤ì–´ì£¼ë©´ì„œ
 	 */
-	
+
 	public UserServiceImpl() {}
-	
+
 	public UserServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
-	}
-	
-	@Override
-	public UserVo getUser(String userid) {
-		return userDao.getUser(userid);
 	}
 
 	public UserDao getUserDao() {
@@ -41,5 +41,42 @@ public class UserServiceImpl implements UserService{
 		this.userDao = userDao;
 	}
 	
+	@Override
+	public UserVo selectUser(String userid) {
+		return userDao.selectUser(userid);
+	}
 	
+
+	@Override
+	public List<UserVo> selectAllUsers() {
+		return userDao.selectAllUsers();
+	}
+
+	@Override
+	public Map<String, Object> selectPagingUser(PageVo vo) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("pageVo", vo);
+		map.put("userList", userDao.selectPagingUser(vo));
+		map.put("userCnt", userDao.selectAllUserCnt());
+		map.put("pagination", (int)Math.ceil((double)((int)map.get("userCnt"))/vo.getPageSize()));
+		return map;
+	}
+
+	@Override
+	public int modifyUser(UserVo userVo) {
+		return userDao.modifyUser(userVo);
+	}
+
+	@Override
+	public int insertUser(UserVo userVo) {
+		return userDao.insertUser(userVo);
+	}
+
+	@Override
+	public int deleteUser(String userid) {
+		return userDao.deleteUser(userid);
+	}
+
+
 }

@@ -9,11 +9,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import kr.or.ddit.test.config.WebTestConfig;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/kr/or/ddit/ioc/ioc.xml")
-public class CollectionBeanTest {
+public class CollectionBeanTest extends kr.or.ddit.test.config.WebTestConfig{
 	
-	//collectionBean ½ºÇÁ¸µºóÀÌ Á¤»óÀûÀ¸·Î »ı¼º µÇ¾ú´ÂÁö
+	//collectionBean ìŠ¤í”„ë§ë¹ˆì´ ì •ìƒì ìœ¼ë¡œ ìƒì„± ë˜ì—ˆëŠ”ì§€
 	@Resource(name="collectionBean")
 	private CollectionBean collectionBean;
 	
@@ -23,7 +25,7 @@ public class CollectionBeanTest {
 		assertNotNull(collectionBean.getList());
 		assertEquals(3, collectionBean.getList().size());
 		assertEquals("sally", collectionBean.getList().get(1));
-		assertEquals("ºê¶ó¿î", collectionBean.getMap().get("usernm"));
+		assertEquals("ë¸Œë¼ìš´", collectionBean.getMap().get("usernm"));
 		
 	}
 
