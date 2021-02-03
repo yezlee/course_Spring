@@ -4,6 +4,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>    
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,10 +131,15 @@
 					
 					-->
 					
+					
+					
 					<div class="form-group">
 						<label for="userid" class="col-sm-2 control-label">사용자 아이디</label>
 						<div class="col-sm-10">
 						
+						
+						Spring Message : <spring:message code="LANG"/>
+						Spring Message : <spring:message code="GREETING" arguments="brown"/>
 						
 <%-- 						<% String userid = request.getParameter("userid");
 							userid = userid == null ? "" : userid; %>
@@ -144,7 +152,9 @@
 						
 							
  --%>						<input type="text" class="form-control" id="userid" name="userid" placeholder="아이디를 입력하세요." /> 
- 						
+ 							
+ 							
+ 							<form:errors path="userVo.userid"/>
 							
  						
  							<%-- value="<%=userid%> 이렇게 했었는데, 위에 제이쿼리로 해서 이거 안써도 됨

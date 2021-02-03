@@ -2,12 +2,20 @@ package kr.or.ddit.user.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 public class UserVo {
 	
+	//이렇게 하는건 Hibernate validate를 사용해서(메이븐추가) 사용한...방법이다
+	//간단한 검증,에러코드는 이렇게 자바 어노테이션 사용해서 추가가능하다.
+	//2. JSR-303 서버사이드 검증방법중 하나(2021-02-03)
+	//어노테이션이 에러코드라고 생각하면 된다.
+	@Size(min=5)
 	private String userid;
+	
 	private String usernm;
 	private String pass;
 	private String alias;
@@ -29,6 +37,8 @@ public class UserVo {
 	
 	
 	public UserVo() {}
+	
+	
 	
 	public UserVo(String userid, String usernm, String pass) {
 		setUserid(userid);

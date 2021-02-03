@@ -5,22 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>user</title>
-
-<!-- Bootstrap core CSS -->
-<%@include file="/WEB-INF/views/common/common_lib.jsp"%>
-<link href="${cp}/css/dashboard.css" rel="stylesheet">
-<link href="${cp}/css/blog.css" rel="stylesheet">
 
 <script>
 /* 	사용자 수정 : 메소드가 get이어야하고 - 수정화면 띄우는거 자체는 겟이지 - action = /userModify
@@ -46,47 +30,7 @@
 </script>
 
 
-</head>
-<body>
-
-	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<%@ include file="../common/left.jsp"%>
-			</div>
-			
-			<nav class="navbar navbar-inverse navbar-fixed-top">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-							aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span> <span
-								class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">JSP/SPRING</a>
-					</div>
-					<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#">Dashboard</a></li>
-							<li><a href="#">Settings</a></li>
-							<li><a href="#">Profile</a></li>
-							<li><a href="#">Help</a></li>
-						</ul>
-						<form class="navbar-form navbar-right">
-							<input type="text" class="form-control" placeholder="Search...">
-						</form>
-					</div>
-				</div>
-			</nav>
-			<div class="container-fluid">
 				<div class="row">
-				
-					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-		
-					
 						<form class="form-horizontal" id="frm" role="form" action="/user/userModify">
 							<input type="hidden" name="userid" value="${user.userid}">
 							
@@ -95,8 +39,8 @@
 								<div class="col-sm-10">
 									<%-- <img src="${cp}/profile/${user.userid}.png"> 이제 이거 안씀. 아래거 쓰지.--%>
 		
-									<a href="/profileDownload?userid=${user.userid}">
-										<img src="/profile?userid=${user.userid}">
+									<a href="/user/profileDownload?userid=${user.userid}">
+										<img src="/user/profile?userid=${user.userid}">
 									</a>
 		
 								</div>
@@ -172,9 +116,3 @@
 							</div>
 						</form>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
-</html>

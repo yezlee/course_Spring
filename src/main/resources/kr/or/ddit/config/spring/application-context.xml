@@ -25,6 +25,38 @@
 	
 	
 	
+	
+	<!--  view resolver 우선순위 
+		order 필드 값이 낮을수록 우선순위가 높다.
+	 -->
+	 <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+		<property name="order" value="0"/>
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
+	 </bean>
+	 
+	 <bean name="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	 	<property name="definitions">
+	 		<list>
+	 			<value>classpath:/kr/or/ddit/config/tiles/tiles-definition.xml</value>
+	 		</list>
+	 	</property>
+	 </bean>
+	 
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="1"/>
+	</bean>
+	
+	<!-- id="jsonView" 요걸로 연결하고 다 하는거 -->
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+	
+	<bean id="fd" class="kr.or.ddit.view.FileDownloadView"/>	
+	<bean id="userExcelDownloadView" class="kr.or.ddit.view.ExcelDownloadView"/>
+	
+	
+	
+	
+	
+	
 <!-- 	view resolver 등록 (여러개를 등록하는 것이 가능) 
 		jsp ==> InternalResourceViewResolver
 -->
@@ -32,7 +64,9 @@
 	     prefix     + view name + suffix
 	/WEB-INF/views/ +   hello   + .jsp
  -->	
+ 	<!--  얘는 우선순위가 무조건 꼴찌 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2"/>
 		<property name="prefix" value="/WEB-INF/views/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
@@ -41,6 +75,8 @@
 		그래서 jsp파일을 요청해도 코드 자체가 그대로 화면에 뜨고.. 정적자원 처리한거처럼. 
 	-->	
 	<mvc:default-servlet-handler/>
+	
+	
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	
