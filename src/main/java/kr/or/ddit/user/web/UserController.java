@@ -113,6 +113,75 @@ public class UserController {
 	}
 	
 	
+	//사용자 리스트가 없는 상태의 화면만 응답으로 생성
+	@RequestMapping("pagingUserAjaxView")
+	public String pagingUserAjaxView() {
+		
+		
+		return "tiles.user.pagingUserAjax";
+	}
+	
+	
+
+	
+	@RequestMapping("pagingUserAjax")
+	public String pagingUserAjax(PageVo pageVo, Model model) {
+		
+		Map<String, Object> map = userService.selectPagingUser(pageVo);
+		
+		List<UserVo> userList = (List<UserVo>)map.get("userList");
+		int userCnt = (int)map.get("userCnt");
+		logger.debug("userCnt : {}" ,userCnt);
+		logger.debug("pageVo.getPageSize() : {}" ,pageVo.getPageSize());
+		int pagination = (int)Math.ceil((double)userCnt/pageVo.getPageSize());
+		
+		model.addAttribute("userList", userList);
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("pageVo", pageVo);
+		
+		//tiles-definition에 설정한 name
+		return "jsonView";
+	}
+	
+	
+	
+	
+	@RequestMapping("pagingUserAjaxHtml")
+	public String pagingUserAjaxHtml(PageVo pageVo, Model model) {
+		
+		Map<String, Object> map = userService.selectPagingUser(pageVo);
+		
+		List<UserVo> userList = (List<UserVo>)map.get("userList");
+		int userCnt = (int)map.get("userCnt");
+		logger.debug("userCnt : {}" ,userCnt);
+		logger.debug("pageVo.getPageSize() : {}" ,pageVo.getPageSize());
+		int pagination = (int)Math.ceil((double)userCnt/pageVo.getPageSize());
+		
+		model.addAttribute("userList", userList);
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("pageVo", pageVo);
+		
+		//tiles-definition에 설정한 name
+		return "/user/pagingUserAjaxHtml";
+		
+		/*
+		 *  pagingUserAjaxHtml ==> /WEB-INF/view/user/pagingUserAjaxHtml.jsp
+		 * 
+		 */
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("user")
 	public String user(Model model, String userid) {
 		
@@ -168,7 +237,7 @@ public class UserController {
 	
 	@RequestMapping("registeUserView")
 	public String registUserView() {
-		return "user/registUser";
+		return "tiles.user.registUser";
 	}
 	
 	//BindingResult객체는 커맨드객체 바로 뒤에 인자로 기술해야한다.

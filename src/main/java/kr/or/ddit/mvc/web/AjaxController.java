@@ -3,7 +3,8 @@ package kr.or.ddit.mvc.web;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,9 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import kr.or.ddit.user.model.UserVo;
+
 @RequestMapping("ajax")
 @Controller
 public class AjaxController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AjaxController.class);
 	
 	//이건 @RequestMapping 얘보다 먼저 실행한다.
 	// 얘가 반환하는 어떤 값을 모델 객체에 넣어준다.
@@ -32,6 +37,18 @@ public class AjaxController {
 	
 	
 	
+	@RequestMapping("view")
+	public String view() {
+		return "ajax/ajaxView";
+	}
+	
+	@RequestMapping("form")
+	public String form(UserVo userVo) {
+		logger.debug("userVo : {}", userVo);
+		return "jsonView";
+	}
+	
+	
 	//진짜로 아작스는 아니지만 이름을 통일성있게 하려고 ㅇ이케줌
 	//localhost/ajax/jsonView
 	
@@ -44,7 +61,7 @@ public class AjaxController {
 	public String jsonView() {
 		
 		//@ModelAttribute 이거 실행하면서 모델객체에 반환해 주니까 이제 모델을 안써도돼!! 이건 프레임워크니까 가능한거고
-		// 이 룰을, 틀을 따라야지
+		// 이 룰을, 틀을 따라야지 - 프레임워크
 		//model.addAttribute("rangers", rangers);
 		
 		return "jsonView";

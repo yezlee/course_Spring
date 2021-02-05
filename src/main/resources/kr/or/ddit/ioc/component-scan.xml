@@ -18,7 +18,7 @@
 		
 	-->
 	
-	<context:component-scan base-package="kr.or.ddit"></context:component-scan>
+	<context:component-scan base-package="kr.or.ddit"/>
 	<!--  레포지토리건 서비스건 코드가 천줄이 되더라도 위에 한줄만 가져오면 다 돼. -->
 	
 	

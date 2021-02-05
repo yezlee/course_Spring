@@ -25,6 +25,8 @@ public class LoginController {
 	@Resource(name="userService")
 	private UserService userService;
 	
+	
+	
 	//특정 파라미터의 값이 정해진 값과 일치할때만 해당 요청을 처리
 	@RequestMapping(path="view", method = {RequestMethod.GET})
 	public String view() {

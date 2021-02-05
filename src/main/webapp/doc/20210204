@@ -1,0 +1,47 @@
+<!-- 
+		interceptor 설정은 filter 설정과 유사함.
+		특정 인터셉터를 어떤 url과 매핑을 할지를 설정
+		filter와 다르게 url매핑이 유연하다.
+		
+		path에서 쓰는 패턴이 있는데,
+		** : 복수개의 path 세그먼트 - 
+			 /user/regist
+			 /user/regist/view
+			 이렇게 몇개가 와도 상관없다. user, regist 이런게 세그먼트
+			 
+		* : 하나 또는 0의 path 세그먼트
+			/user/*  ==> /user/regist, /user/modify
+			
+	 	? : 하나의 문자를 의미
+			 
+	 -->
+	 
+	 
+	 
+viewName : "ajax/ajaxView"
+
+viewResolver가 어떤 걸로 설정이 되어있지?
+
+1. tilesViewResolver
+	==> viewName과 동일한 이름의 tiles definition 이 있는지 검사
+	있으면 사용, 없으면?
+2. beanNameViewResolver
+	==> viewName과 동일한 이름의 스프링 빈을 찾고, 검색이 되면 해당 스프링 빈을 view객체로 사용
+	있으면 view 객체로 사용, 없으면?
+3. InternalResourceViewResolver
+	==> view name에 해당하는 리소스의 존재 유무와 관계없이 forward
+		 
+	 
+
+
+중프를 스프링으로 바꾸기
+1. login, main 화면 공통
+
+2. 본인이 만든 메뉴 아무거나 하나
+	메뉴가 메인화면 링크를 통해 접속할수 있게끔
+	(만약 본인이 만든 기능이 메인에 없을 경우 강제로 추가)
+	 
+	 
+	 
+	 
+	 
