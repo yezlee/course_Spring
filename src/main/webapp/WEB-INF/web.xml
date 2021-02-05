@@ -15,6 +15,7 @@
   	<param-value>classpath:/kr/or/ddit/config/spring/root-context.xml
   				classpath:/kr/or/ddit/config/spring/datasource-context.xml	
   	</param-value>
+<!--  인터셉터처럼 계륵같은 존재... 개발할때는 주석				classpath:/kr/or/ddit/config/spring/aop-context.xml	 -->
   </context-param>
   
   <listener>

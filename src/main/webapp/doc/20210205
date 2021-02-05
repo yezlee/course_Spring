@@ -4,4 +4,37 @@ ajax ==> json
 ajax ==> xml
 ajax ==> html
 
+AOP - 스프링에서 만든게 아니고, 그냥 프로그램중 하나다.
+(Aspect Oriented Programming)관점 지향 프로그래밍
+
+AOP는 공통되는걸 처리해주고
+OOP는 객체로 나눠서 따로따로 처리해주고(OOP는 하나의 클래스는 하나의 관심사에 집중)
+이둘은 서로 대체하는게 아니고  보완해주는 개념(AOP는 OOP를 대체하는게 아니고 보완해주는것이다.)
+
+관리가 되기 때문에 - 스프링 특징중 하나인 선언적 트랜잭션
+AOP가 가능하다.
+선언적트랜잭션이 가능하기때문에 aop를 쓰지만 개발자가 하지는않고 엘레먼트를 쓴다.
+
+AspectJ 라는 라이브러리를 쓰는데 - 이게 AOP
+스프링에서는 이걸 다쓰는게 아니고 제한적임
+그래서 모든기능을 쓸수없다?
+
+
+aspect - logging, transaction 제어
+advice : 언제 할지 
+join point (핵심로직을 담고있는 메소드. 메소드라고 생각함된다.)어떤 메소드한테 적용하겠다. 언제? 시작전 혹은 끝나고 - advice를 적용할 메소드
+point cut : 어떤 메소드한테 적용하겠따. join point의 식별을 정의 - 어드바이스가 적용되는 부분을 설정한다.
+weaving : 공통관심사항을 핵심로직코드에 꼬매는거야
+
+advisor는 스프링에만 나오는 개념 - 
+proxy(class A_ : weaving해서 만들어진 클래스) - 얘가 구현체인거임
+
+
+ddit.board.service.*Service.*(..)
+ex) ddit.board.service.UserService.getUser(String userid)
+ex) ddit.board.service.UserService.getAllUser()
+ex) ddit.board.service.UserListService
+
+aop - 인터페이스가 있어야한다?
+aop는 서비스, 다오, 다 가능하고 컨트롤러에서도 가능한데, 지금은 안돼. 우리가 컨트롤러 인터페이스를 안만들어서????
 
