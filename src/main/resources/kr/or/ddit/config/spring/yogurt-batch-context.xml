@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+<!-- 	배치시스템 - 요구르트 
+		1. select * from cycle; 여기서 데이터를 read하고 
+		2. 사이클 테이블에서 얻은 데이터 1 100 2	1 를 자바 로직으로 1 100 20210201 1 / 1 100 20210208 1 / 1 100 20210215 1 / 1 100 20210222 1 
+			이렇게 2월달의 월요일(2)마다 한다고 날짜를 뽑아낼수 있는 process를 하고   
+		3. 위에서 프로세스한 데이터를 daily 테이블에다가 write한다.
+-->
+<!-- 	모든 설정을 여기다가 해보자. -->
+	
+	<context:annotation-config/>
+	
+	<context:property-placeholder location="classpath:/kr/or/ddit/config/db/dbinfo.properties"/>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.userName}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="initialSize" value="3"></property>
+	</bean>
+	
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:/kr/or/ddit/config/mybatis/mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+ 
+ 
+ 	<!-- 궁극적으로 sqlSessionTemplate이게 필요해서 물리고 물리고 여기까지 만든거 -->
+ 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+ 		<constructor-arg ref="sqlSessionFactory"/>
+ 	</bean>
+ 	
+ 	
+ 	
+ 	<!--  위에 마이바티스 쓰기위한 연결 완료 -->
+ 	
+ 	<!-- yogurt reader, procerssor, writer -->
+ 	<bean id="yogurtReader" class="org.mybatis.spring.batch.MyBatisCursorItemReader">
+ 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+ 		<property name="queryId" value="yogurt.selectCycle"/>
+ 	</bean>
+ 	
+ 	<!-- jobParameter를 주입받기위해 scope를 step으로 등록 -->
+	<bean id="yogurtProcessor" class="kr.or.ddit.batch.yogurt.YogurtProcessor" scope="step"/>
+	
+	<bean id="yogurtWriter" class="kr.or.ddit.batch.yogurt.CustomMybatisBatchItemWriter">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		<property name="statementId" value="yogurt.insertDaily"/>
+	</bean>
+	
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean"/>
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
+	
+	<batch:job id="yogurtJob" job-repository="jobRepository">
+		<batch:step id="yogurtStep">
+			<batch:tasklet>
+				<batch:chunk commit-interval="1" reader="yogurtReader" processor="yogurtProcessor" writer="yogurtWriter"/>
+			</batch:tasklet>
+		</batch:step>
+		
+	</batch:job>
+	
+	
+	
+</beans>

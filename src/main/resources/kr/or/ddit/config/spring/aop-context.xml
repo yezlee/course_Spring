@@ -9,7 +9,7 @@
 
 <!-- 	<bean id="aspect" class="kr.or.ddit.aop.Aspect"/> -->
 	
-		<!-- kr.or.ddit 패키지 하위에 service라는 이름을 갖은 패키지에 속한  모든 클래스의 메소드에 대해 공통의 관심사항을 적용-->
+		<!-- kr.or.ddit 패키지 하위에 service라는 이름을 가진 패키지에 속한 모든 클래스의 메소드에 대해 공통의 관심사항을 적용-->
 		<!-- 메소드 : 접근제어(public만 가능 그래서 생략가능) + 반환타입(뭘반환하든 상관없어서 *) + 패키지명.클래스명.메소드이름(메소드인자-파라미터) -->
 <!-- 	<aop:config>  -->
 <!-- 		<aop:pointcut expression="execution(* kr.or.ddit..service.*.*(..))" id="servicePointCut"/> -->
@@ -27,5 +27,8 @@
 		<context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect"/>		
 	</context:component-scan>
 	
+	<!-- 이거 써주면 자동으로 프록시 만들어주나? -->
 	<aop:aspectj-autoproxy/>
+	
+	
 </beans>

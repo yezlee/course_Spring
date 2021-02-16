@@ -72,7 +72,7 @@ order순서를 어떻게 해야하냐? 라고 궁금하지
 	따라서 우선순위를 가장 최하위로 둔다. 제일 마지막에 실행해!!
 	
 	BeanNameViewResolver얘는 컨트롤러랑 상관이 있어. 로직이랑은 상관없어서 부모(모델) 쪽에 안쓰고 차일드한테씀
-	그게 application.xml
+	그게 application-context.xml
 	
 
 

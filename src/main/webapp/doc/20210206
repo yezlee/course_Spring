@@ -1,0 +1,27 @@
+1. pom(dependency)
+2. reader / processor / writer
+
+	reader ==> ItemReader 구현
+	processor ==> ItemProcessor 구현
+	writer ==> ItemWriter 구현
+	
+		
+K ==> Key
+V ==> Value
+T ==> Type
+
+I ==> In
+O ==> Out
+
+persistent <-> memory
+(db)
+
+
+
+==========
+
+scheduler 
+- 특정 메소드를 주기적으로 실행. 
+- 매달1일 : 한달에 한번
+- 매일 오전9시에 : 하루에 한번
+
